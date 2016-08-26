@@ -1,7 +1,9 @@
 
 import Conexao.Conexao;
 import java.awt.Toolkit;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
+import javax.swing.ListSelectionModel;
 
 /*
  * To change this template, choose Tools | Templates
@@ -16,12 +18,12 @@ public class CadastroUsuario extends javax.swing.JFrame {
 
    
     Conexao conex = new Conexao();
-    UsuariosSQL usuSQL = new UsuariosSQL();//mod
-    clUsuarios usuCL = new clUsuarios();//
     
     public CadastroUsuario() {
         initComponents();
+        conex.Conexao();
         setLocationRelativeTo(null);
+        objUsu = new clUsuarios();
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/Imagens/iconeUsuario.png")));
     }
 
@@ -49,7 +51,7 @@ public class CadastroUsuario extends javax.swing.JFrame {
         btnPesquisar = new javax.swing.JButton();
         btnVoltar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        grdUsuarios = new javax.swing.JTable();
         txtEmail = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -83,9 +85,9 @@ public class CadastroUsuario extends javax.swing.JFrame {
 
         txtPesquisa.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         txtPesquisa.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
-        txtPesquisa.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtPesquisaActionPerformed(evt);
+        txtPesquisa.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtPesquisaFocusLost(evt);
             }
         });
 
@@ -159,23 +161,23 @@ public class CadastroUsuario extends javax.swing.JFrame {
             }
         });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        grdUsuarios.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Usuário", "Senha"
+                "CODUSU", "LOGIN", "SENHA", "NOME", "EMAIL"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, true
+                false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(grdUsuarios);
 
         txtEmail.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         txtEmail.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
@@ -307,15 +309,15 @@ public class CadastroUsuario extends javax.swing.JFrame {
         }
         else   
         {
-        usuCL.setLogin(txtUsuario.getText());
-        usuCL.setNome(txtNome.getText());
-        usuCL.setSenha(txtSenha.getText());
-        usuCL.setEmail(txtEmail.getText());  
+        objUsu.setLogin(txtUsuario.getText());
+        objUsu.setNome(txtNome.getText());
+        objUsu.setSenha(txtSenha.getText());
+        objUsu.setEmail(txtEmail.getText());  
         txtEmail.setText("");
         txtNome.setText("");
         txtSenha.setText("");
         txtUsuario.setText("");
-        usuSQL.Salvar(usuCL);
+        objUsu.Salvar();
         txtEmail.setEnabled(false);
         txtSenha.setEnabled(false);
         txtUsuario.setEnabled(false);
@@ -353,20 +355,57 @@ public class CadastroUsuario extends javax.swing.JFrame {
     }//GEN-LAST:event_btnNovoActionPerformed
 
     private void btnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarActionPerformed
-        usuCL.setPesquisa(txtPesquisa.getText());
-        clUsuarios kappa = usuSQL.PesuisaUsuario(usuCL);
-        txtUsuario.setText(kappa.getLogin());
-        txtSenha.setText(kappa.getSenha());
-        txtEmail.setText(kappa.getEmail());
-        txtNome.setText(kappa.getNome());
-        
-        
+        objUsu.PesquisaUsuarios(grdUsuarios);
     }//GEN-LAST:event_btnPesquisarActionPerformed
 
-    private void txtPesquisaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPesquisaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtPesquisaActionPerformed
+    private void txtPesquisaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtPesquisaFocusLost
+         if ((!txtPesquisa.getText().equals("0")) && (!txtPesquisa.getText().equals("")))
+        {
+         objUsu.PesuisaUsuarios(Integer.parseInt(txtPesquisa.getText()));
+         txtNome.setText(objUsu.getNome());
+         txtUsuario.setText(objUsu.getNome());
+         txtSenha.setText(objUsu.getSenha());
+         txtEmail.setText(objUsu.getEmail());
+        }
+         
+         else
+         {
+             JOptionPane.showMessageDialog(null, "Pesquise por nome ou ID" , "Atenção" ,JOptionPane.INFORMATION_MESSAGE);
+         }
+    }//GEN-LAST:event_txtPesquisaFocusLost
 
+    public void preencherTabela(String Sql) {
+        ArrayList dados = new ArrayList();
+        String [] colunas = new String [] {"ID","LOGIN","SENHA","EMAIL","NOME"};
+        conex.Conexao();
+        conex.executaSQL(Sql);
+
+        
+        try {
+            conex.resultado.first();
+            do {
+                dados.add(new Object[]{conex.resultado.getInt("CODUSUARIO"), 
+                                       conex.resultado.getString("LOGIN"), 
+                                       conex.resultado.getString("SENHA"), 
+                                       conex.resultado.getString("EMAIL"), 
+                                       conex.resultado.getString("NOME")});
+            } while (conex.resultado.next());
+            
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(rootPane, "Erro ao preencher ArrayList" +ex);
+        }
+        
+       
+        ModeloTabela model = new ModeloTabela(dados, colunas);
+        grdUsuarios.setModel(model);
+        
+        
+        grdUsuarios.setAutoResizeMode(grdUsuarios.AUTO_RESIZE_ALL_COLUMNS);
+        grdUsuarios.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        conex.DesconectaDB();
+        
+        
+    }
     /**
      * @param args the command line arguments
      */
@@ -401,6 +440,7 @@ public class CadastroUsuario extends javax.swing.JFrame {
             }
         });
     }
+    private clUsuarios objUsu;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnExcluir;
@@ -408,12 +448,12 @@ public class CadastroUsuario extends javax.swing.JFrame {
     private javax.swing.JButton btnPesquisar;
     private javax.swing.JButton btnSalvar;
     private javax.swing.JButton btnVoltar;
+    private javax.swing.JTable grdUsuarios;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JLabel lblEmail;
     private javax.swing.JLabel lblNome;
     private javax.swing.JLabel lblUsuario;

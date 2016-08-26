@@ -1,5 +1,5 @@
 
-import javax.swing.JFrame;
+import Conexao.Conexao;
 import javax.swing.JOptionPane;
 
 /*
@@ -13,7 +13,8 @@ import javax.swing.JOptionPane;
  * @author Thiago
  */
 public class Utilidades {
- 
+        
+        
         public void fecharForm()
         {
         String message = "Deseja realmente fehcar o programa?";
@@ -22,8 +23,8 @@ public class Utilidades {
         //Se o usuário clicar em "Sim" retorna 0 pra variavel reply, se informado não retorna 1
         int reply = JOptionPane.showConfirmDialog(null, message, title, JOptionPane.YES_NO_OPTION);
             if (reply == JOptionPane.YES_OPTION)
-            {
-                System.exit(0);
+            {                      
+                System.exit(0);              
             }
             else
             {

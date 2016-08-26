@@ -1,21 +1,20 @@
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
+import javax.swing.JTable;
 
 
 /**
  * 
  * @author Thiago C. da Silva
  */
-public class clUsuarios extends Conexao.Conexao {
+public class clUsuarios {
     
     private int ID;
     private String login;
     private String senha;
+    private String email;
+    private String nome;
+    private String pesquisa;
+   
 
     public int getID() {
         return ID;
@@ -36,10 +35,50 @@ public class clUsuarios extends Conexao.Conexao {
     public String getSenha() {
         return senha;
     }
-
-    public void setSenha(String senha) {
-        this.senha = senha;
+    
+    public void setSenha(String Senha) {
+        this.senha = Senha;
     }
-        
+      
+    public String getEmail() {
+        return email;
+    }
+      
+    public void setEmail(String Email) {
+        this.email = Email;
+    }
+    
+    public String getNome() {
+        return nome;
+    }
+    
+    public void setNome(String Nome) {
+        this.nome = Nome;
+    }
+    
+    public String getPesquisa() {
+        return pesquisa;
+    }
 
+    public void setPesquisa(String Pesquisa) {
+        this.pesquisa = Pesquisa;
+    }
+    
+    public void PesuisaUsuarios(int ID) {
+        UsuariosSQL objSQL = new UsuariosSQL();
+        objSQL.PesuisaUsuario(this, ID);
+    }
+    
+    public void PesquisaUsuarios(JTable grid) {
+        UsuariosSQL objSQL = new UsuariosSQL();
+        objSQL.PesquisarUsuario(grid);
+    }
+    
+    public void Salvar() {
+        UsuariosSQL objSQL = new UsuariosSQL();
+        objSQL.Salvar(this);
+    }
+    
+
+    
 }

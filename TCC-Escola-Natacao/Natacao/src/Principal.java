@@ -56,6 +56,7 @@ public class Principal extends javax.swing.JFrame {
         jCServico = new javax.swing.JMenuItem();
         jCAluno = new javax.swing.JMenuItem();
         jCProfessor = new javax.swing.JMenuItem();
+        jSeparator2 = new javax.swing.JPopupMenu.Separator();
         jCUsuario = new javax.swing.JMenuItem();
         jFinanceiro = new javax.swing.JMenu();
         jFGM = new javax.swing.JMenuItem();
@@ -126,6 +127,7 @@ public class Principal extends javax.swing.JFrame {
             }
         });
         jCadastro.add(jCProfessor);
+        jCadastro.add(jSeparator2);
 
         jCUsuario.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_U, java.awt.event.InputEvent.CTRL_MASK));
         jCUsuario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/iconeUsuario.png"))); // NOI18N
@@ -272,6 +274,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenu jFinanceiro;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JMenuBar jMPrincipal;
+    private javax.swing.JPopupMenu.Separator jSeparator2;
     private javax.swing.JLabel lblData;
     private javax.swing.JLabel lblHora;
     // End of variables declaration//GEN-END:variables
