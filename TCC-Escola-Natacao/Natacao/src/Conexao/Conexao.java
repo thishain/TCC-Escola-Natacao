@@ -16,25 +16,26 @@ public class Conexao {
     public Connection con;
     public Statement stm;
     
-    public void Conexao() {
+    public void Conectar() {
     try {
         
         Class.forName("org.firebirdsql.jdbc.FBDriver");
         
-        con = DriverManager.getConnection("jdbc:firebirdsql://127.0.0.1/"
-                + "C:\\Users\\Thiago\\Desktop\\Polivalente\\Java 3S - Billy\\TCC-Escola-Natacao\\TCC-Escola-Natacao\\Natacao\\ESCOLANATACAO.fdb?lc_ctype=WIN1252","SYSDBA","masterkey");   
+        con = DriverManager.getConnection("jdbc:firebirdsql://127.0.0.1:3051/"
+                + "C:\\dbe\\ESCOLANATACAO.fdb?lc_ctype=WIN1252","SYSDBA","masterkey");   
         stm = con.createStatement();
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "Não foi possivel conectar ao banco!" + ex.getMessage());
         }   
     }
     
-    public void executaSQL(String sql) {
-        try {
-            //Faz a pesquisa no banco e diferencia maiusculas de minusculas.
-            stm = con.createStatement();
-            resultado = stm.executeQuery(sql);
-        } catch (SQLException ex) {
+    public void executaSQL(String Sql) {
+        try { 
+            stm = con.createStatement(resultado.TYPE_SCROLL_INSENSITIVE, resultado.CONCUR_READ_ONLY);
+            resultado = stm.executeQuery(Sql);
+            
+        }
+        catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Erro ao executar SQL!" + ex.getMessage());
         }
     }
@@ -48,6 +49,8 @@ public class Conexao {
         }
         
     }
+    
+    
     
 }
 

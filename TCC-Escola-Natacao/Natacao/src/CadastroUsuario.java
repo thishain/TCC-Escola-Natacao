@@ -1,9 +1,6 @@
 import Conexao.Conexao;
-import java.awt.Color;
 import java.awt.Toolkit;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 
@@ -35,6 +32,8 @@ public class CadastroUsuario extends javax.swing.JFrame {
     public void carregaGrid () {
         objUsu.PesquisaUsuario(grdUsuarios);
     }
+    
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -71,8 +70,10 @@ public class CadastroUsuario extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         txtCSenha = new javax.swing.JPasswordField();
         txtSenha = new javax.swing.JPasswordField();
-        cbxTipo = new javax.swing.JComboBox<>();
+        cbxTipo = new javax.swing.JComboBox<String>();
         lblEmail3 = new javax.swing.JLabel();
+        cbID = new javax.swing.JCheckBox();
+        cbLogin = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Cadastro de Usuario");
@@ -102,6 +103,7 @@ public class CadastroUsuario extends javax.swing.JFrame {
 
         txtPesquisa.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         txtPesquisa.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+        txtPesquisa.setEnabled(false);
 
         jLabel4.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         jLabel4.setText("Senha");
@@ -238,7 +240,7 @@ public class CadastroUsuario extends javax.swing.JFrame {
         txtID.setEnabled(false);
 
         lblEmail2.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-        lblEmail2.setText("Pesquise por ID");
+        lblEmail2.setText("Pesquisa:");
 
         jLabel5.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         jLabel5.setText("Confirme a senha");
@@ -251,6 +253,17 @@ public class CadastroUsuario extends javax.swing.JFrame {
 
         lblEmail3.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         lblEmail3.setText("Tipo");
+
+        cbID.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        cbID.setText("ID");
+        cbID.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbIDActionPerformed(evt);
+            }
+        });
+
+        cbLogin.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        cbLogin.setText("LOGIN");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -284,19 +297,22 @@ public class CadastroUsuario extends javax.swing.JFrame {
                             .addComponent(cbxTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblEmail3)
                             .addComponent(txtNome))))
-                .addGap(0, 18, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(11, 11, 11)
-                                .addComponent(lblEmail1)))
-                        .addGap(213, 213, 213)
+                            .addComponent(lblEmail1)
+                            .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(203, 203, 203)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblEmail2)
-                            .addComponent(txtPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(cbID)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(cbLogin)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnPesquisar))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 467, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -305,7 +321,7 @@ public class CadastroUsuario extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addComponent(btnNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(7, 7, 7)
-                .addComponent(btnSalvar, javax.swing.GroupLayout.DEFAULT_SIZE, 77, Short.MAX_VALUE)
+                .addComponent(btnSalvar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(7, 7, 7)
                 .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -319,7 +335,7 @@ public class CadastroUsuario extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel5)
                     .addComponent(txtCSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -331,7 +347,7 @@ public class CadastroUsuario extends javax.swing.JFrame {
                     .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3)
                     .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(46, 46, 46)
+                .addGap(43, 43, 43)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel1)
@@ -343,7 +359,6 @@ public class CadastroUsuario extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -362,18 +377,22 @@ public class CadastroUsuario extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtCSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(cbxTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
                                 .addComponent(lblEmail2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 6, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(lblEmail1)
+                                    .addComponent(cbID)
+                                    .addComponent(cbLogin))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(txtPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(btnPesquisar)))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(lblEmail1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(btnPesquisar))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
@@ -507,14 +526,13 @@ public class CadastroUsuario extends javax.swing.JFrame {
 //            txtID.setText("");
 //        }
 //        else   
-//        {
-        objUsu.PesquisaUsuarioUnico(grdUsuarios, txtPesquisa.getText());
-        //objUsu.PesquisaUsuarios(txtPesquisa.getText());
-        txtID.setText(Integer.toString(objUsu.getID()));
-        txtNome.setText(objUsu.getNome());
-        txtUsuario.setText(objUsu.getLogin());
-        txtSenha.setText(objUsu.getSenha());
-        txtEmail.setText(objUsu.getEmail());
+
+        //objUsu.PesquisaUsuarios(txtPesquisa.getText(), grdUsuarios);   
+//      txtID.setText(Integer.toString(objUsu.getID()));
+//      txtNome.setText(objUsu.getNome());
+//      txtUsuario.setText(objUsu.getLogin());
+//      txtSenha.setText(objUsu.getSenha());
+//      txtEmail.setText(objUsu.getEmail());
         txtEmail.setEnabled(false);
         txtSenha.setEnabled(false);
         txtUsuario.setEnabled(false);
@@ -524,6 +542,7 @@ public class CadastroUsuario extends javax.swing.JFrame {
         btnEditar.setEnabled(false);
         btnExcluir.setEnabled(false);
         txtCSenha.setEnabled(false);
+        //pesquisaPorIDouLogin();
         //}
     }//GEN-LAST:event_btnPesquisarActionPerformed
 
@@ -592,6 +611,29 @@ public class CadastroUsuario extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnExcluirActionPerformed
 
+    private void cbIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbIDActionPerformed
+        if (cbID.isSelected()) {
+            txtPesquisa.setEnabled(true);
+        }
+        
+        else if (cbLogin.isSelected()) {
+            txtPesquisa.setEnabled(true);
+        }
+        
+        else if (cbID.isSelected()) {
+            objUsu.PesquisaUsuarioID(grdUsuarios, Integer.parseInt(txtPesquisa.getText()));
+        }
+        
+        else if (cbLogin.isSelected()) {
+            objUsu.PesquisaUsuarios(txtPesquisa.getText(), grdUsuarios);
+        }
+        
+        else {
+            txtPesquisa.setEnabled(false);
+        }
+    
+    }//GEN-LAST:event_cbIDActionPerformed
+
     public void modeloTabela() {  
         grdUsuarios.getColumnModel().getColumn(0).setPreferredWidth(40);
         grdUsuarios.getColumnModel().getColumn(0).setResizable(false);
@@ -650,6 +692,8 @@ public class CadastroUsuario extends javax.swing.JFrame {
     private javax.swing.JButton btnPesquisar;
     private javax.swing.JButton btnSalvar;
     private javax.swing.JButton btnVoltar;
+    private javax.swing.JCheckBox cbID;
+    private javax.swing.JCheckBox cbLogin;
     private javax.swing.JComboBox<String> cbxTipo;
     private javax.swing.JTable grdUsuarios;
     private javax.swing.JLabel jLabel1;

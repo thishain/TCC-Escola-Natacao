@@ -1,5 +1,3 @@
-
-import Conexao.Conexao;
 import javax.swing.JOptionPane;
 
 /*
@@ -28,7 +26,7 @@ public class Utilidades {
             }
             else
             {
-
+               
             }
         
         }

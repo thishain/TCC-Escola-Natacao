@@ -64,12 +64,8 @@ public class clUsuarios {
         this.pesquisa = Pesquisa;
     }
     
-    public void PesuisaUsuarios(int ID) {
-        UsuariosSQL objSQL = new UsuariosSQL();
-        objSQL.PesuisaUsuario(this, ID);
-    }
     
-    public void PesquisaUsuarios(JTable grid) {
+    public void PesquisaUsuario(JTable grid) {
         UsuariosSQL objSQL = new UsuariosSQL();
         objSQL.PesquisarUsuario(grid);
     }
@@ -77,6 +73,16 @@ public class clUsuarios {
     public void Salvar() {
         UsuariosSQL objSQL = new UsuariosSQL();
         objSQL.Salvar(this);
+    }
+    
+    public void PesquisaUsuarios(String pesquisa, JTable grid) {
+        UsuariosSQL objSQL = new UsuariosSQL();
+        objSQL.PesuisaUsuario(grid, pesquisa);
+    }
+    
+    public void PesquisaUsuarioID(JTable grid, int ID) {
+        UsuariosSQL objSQL = new UsuariosSQL();
+        objSQL.PesquisaUsuarioUnico(grid, ID);
     }
     
 

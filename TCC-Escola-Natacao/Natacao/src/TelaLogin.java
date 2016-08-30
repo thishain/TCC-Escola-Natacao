@@ -155,7 +155,6 @@ public class TelaLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_btnConectarActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        conecta.DesconectaDB();
         clUtilidades.fecharForm();
     }//GEN-LAST:event_formWindowClosing
 
@@ -189,7 +188,7 @@ public class TelaLogin extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TelaLogin().setVisible(true);
+                new CadastroUsuario().setVisible(true);
             }
         });
     }
