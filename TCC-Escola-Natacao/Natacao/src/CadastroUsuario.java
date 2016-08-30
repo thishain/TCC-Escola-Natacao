@@ -27,13 +27,14 @@ public class CadastroUsuario extends javax.swing.JFrame {
         carregaGrid();
         modeloTabela();
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/Imagens/iconeUsuario.png")));
+        cbxTipo.addItem("Administrador");
+        cbxTipo.addItem("Recepcionista");
     }
     
     public void carregaGrid () {
         objUsu.PesquisaUsuario(grdUsuarios);
     }
-    
-
+   
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -44,6 +45,7 @@ public class CadastroUsuario extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
         lblUsuario = new javax.swing.JLabel();
         txtUsuario = new javax.swing.JTextField();
         lblNome = new javax.swing.JLabel();
@@ -70,7 +72,7 @@ public class CadastroUsuario extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         txtCSenha = new javax.swing.JPasswordField();
         txtSenha = new javax.swing.JPasswordField();
-        cbxTipo = new javax.swing.JComboBox<String>();
+        cbxTipo = new javax.swing.JComboBox<>();
         lblEmail3 = new javax.swing.JLabel();
         cbID = new javax.swing.JCheckBox();
         cbLogin = new javax.swing.JCheckBox();
@@ -103,7 +105,6 @@ public class CadastroUsuario extends javax.swing.JFrame {
 
         txtPesquisa.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         txtPesquisa.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
-        txtPesquisa.setEnabled(false);
 
         jLabel4.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         jLabel4.setText("Senha");
@@ -254,14 +255,12 @@ public class CadastroUsuario extends javax.swing.JFrame {
         lblEmail3.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         lblEmail3.setText("Tipo");
 
+        buttonGroup1.add(cbID);
         cbID.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        cbID.setSelected(true);
         cbID.setText("ID");
-        cbID.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbIDActionPerformed(evt);
-            }
-        });
 
+        buttonGroup1.add(cbLogin);
         cbLogin.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         cbLogin.setText("LOGIN");
 
@@ -294,9 +293,9 @@ public class CadastroUsuario extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(lblEmail)
                             .addComponent(txtEmail, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
-                            .addComponent(cbxTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblEmail3)
-                            .addComponent(txtNome))))
+                            .addComponent(txtNome)
+                            .addComponent(cbxTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -321,7 +320,7 @@ public class CadastroUsuario extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addComponent(btnNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(7, 7, 7)
-                .addComponent(btnSalvar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnSalvar, javax.swing.GroupLayout.DEFAULT_SIZE, 83, Short.MAX_VALUE)
                 .addGap(7, 7, 7)
                 .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -335,7 +334,7 @@ public class CadastroUsuario extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel5)
                     .addComponent(txtCSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -422,12 +421,20 @@ public class CadastroUsuario extends javax.swing.JFrame {
             txtUsuario.requestFocus();
         }
         
-        else if(txtSenha.getText().isEmpty()) {
+        else if (txtSenha.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Preencha o campo senha para continuar!" , "Atenção", JOptionPane.INFORMATION_MESSAGE);
             txtSenha.requestFocus();
+            
         }
+        else if (txtCSenha.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Preencha o campo confirma senha para continuar!" , "Atenção", JOptionPane.INFORMATION_MESSAGE);
+            txtCSenha.requestFocus();
+            
+        }else 
+        if (txtSenha.getText().equals(txtCSenha.getText())) {
+            
      
-            else if (flag == 1)
+            if (flag == 1)
         {
             objUsu.setLogin(txtUsuario.getText());
             objUsu.setNome(txtNome.getText());
@@ -438,6 +445,7 @@ public class CadastroUsuario extends javax.swing.JFrame {
             txtNome.setText("");
             txtSenha.setText("");
             txtUsuario.setText("");
+            txtCSenha.setText("");
             txtEmail.setEnabled(false);
             txtSenha.setEnabled(false);
             txtUsuario.setEnabled(false);
@@ -465,6 +473,8 @@ public class CadastroUsuario extends javax.swing.JFrame {
             txtSenha.setText("");
             txtUsuario.setText("");
             txtID.setText("");
+            txtCSenha.setText("");
+            txtCSenha.setEnabled(false);
             txtEmail.setEnabled(false);
             txtSenha.setEnabled(false);
             txtUsuario.setEnabled(false);
@@ -475,6 +485,10 @@ public class CadastroUsuario extends javax.swing.JFrame {
             btnExcluir.setEnabled(false);
             carregaGrid();
             }
+        } else {
+                JOptionPane.showMessageDialog(null, "As senhas não correspodem", "Erro", JOptionPane.ERROR_MESSAGE);
+            }
+        
         
       
     }//GEN-LAST:event_btnSalvarActionPerformed
@@ -485,6 +499,7 @@ public class CadastroUsuario extends javax.swing.JFrame {
         txtSenha.setText("");
         txtUsuario.setText("");
         txtID.setText("");
+        txtCSenha.setText("");
         txtPesquisa.setText("");
         btnSalvar.setEnabled(false);
         btnNovo.setEnabled(true);
@@ -522,7 +537,7 @@ public class CadastroUsuario extends javax.swing.JFrame {
 
     private void btnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarActionPerformed
 //        if (txtPesquisa.getText().equals("")) {
-//            JOptionPane.showMessageDialog(null, "Pesquise por ID!", "Erro", JOptionPane.ERROR_MESSAGE);
+//            JOptionPane.showMessageDialog(null, "Selecione uma opção e digite o que deseja pesquisar", "Erro", JOptionPane.ERROR_MESSAGE);
 //            txtID.setText("");
 //        }
 //        else   
@@ -533,6 +548,26 @@ public class CadastroUsuario extends javax.swing.JFrame {
 //      txtUsuario.setText(objUsu.getLogin());
 //      txtSenha.setText(objUsu.getSenha());
 //      txtEmail.setText(objUsu.getEmail());
+        try {
+        if (cbID.isSelected() == true && !txtPesquisa.getText().equals("")) {
+            
+            objUsu.PesquisaUsuarioID(grdUsuarios, Integer.parseInt(txtPesquisa.getText()));
+        }
+        
+        
+        if (cbLogin.isSelected() == true && !txtPesquisa.getText().equals("")) {
+                 
+            objUsu.PesquisaUsuarios(txtPesquisa.getText(), grdUsuarios);
+        }
+        
+        else if(txtPesquisa.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Não deixe o campo de pesquisa vazio!", "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Pesquisa com ID somente com numeros!", "Erro", JOptionPane.ERROR_MESSAGE);
+            txtPesquisa.setText("");
+        }
+
         txtEmail.setEnabled(false);
         txtSenha.setEnabled(false);
         txtUsuario.setEnabled(false);
@@ -542,7 +577,7 @@ public class CadastroUsuario extends javax.swing.JFrame {
         btnEditar.setEnabled(false);
         btnExcluir.setEnabled(false);
         txtCSenha.setEnabled(false);
-        //pesquisaPorIDouLogin();
+  
         //}
     }//GEN-LAST:event_btnPesquisarActionPerformed
 
@@ -560,14 +595,23 @@ public class CadastroUsuario extends javax.swing.JFrame {
             txtSenha.setText(conex.resultado.getObject("SENHA").toString());
             txtNome.setText(conex.resultado.getObject("NOME").toString());
             txtEmail.setText(conex.resultado.getObject("EMAIL").toString()); 
+            txtCSenha.setText(conex.resultado.getObject("SENHA").toString());
         
            
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Erro ao selecionar dados! \n" + ex);
-        }
+        }       
         btnNovo.setEnabled(false);
         btnEditar.setEnabled(true);
         btnExcluir.setEnabled(true);
+        btnSalvar.setEnabled(false);
+        txtEmail.setEnabled(false);
+        txtSenha.setEnabled(false);
+        txtUsuario.setEnabled(false);
+        txtNome.setEnabled(false);
+        btnSalvar.setEnabled(false); 
+        btnExcluir.setEnabled(true);
+        txtCSenha.setEnabled(false);
         conex.DesconectaDB();
           
     }//GEN-LAST:event_grdUsuariosMouseClicked
@@ -594,6 +638,7 @@ public class CadastroUsuario extends javax.swing.JFrame {
             txtSenha.setText("");
             txtUsuario.setText("");
             txtID.setText("");
+            txtCSenha.setText("");
             txtEmail.setEnabled(false);
             txtSenha.setEnabled(false);
             txtUsuario.setEnabled(false);
@@ -610,29 +655,6 @@ public class CadastroUsuario extends javax.swing.JFrame {
             
         }
     }//GEN-LAST:event_btnExcluirActionPerformed
-
-    private void cbIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbIDActionPerformed
-        if (cbID.isSelected()) {
-            txtPesquisa.setEnabled(true);
-        }
-        
-        else if (cbLogin.isSelected()) {
-            txtPesquisa.setEnabled(true);
-        }
-        
-        else if (cbID.isSelected()) {
-            objUsu.PesquisaUsuarioID(grdUsuarios, Integer.parseInt(txtPesquisa.getText()));
-        }
-        
-        else if (cbLogin.isSelected()) {
-            objUsu.PesquisaUsuarios(txtPesquisa.getText(), grdUsuarios);
-        }
-        
-        else {
-            txtPesquisa.setEnabled(false);
-        }
-    
-    }//GEN-LAST:event_cbIDActionPerformed
 
     public void modeloTabela() {  
         grdUsuarios.getColumnModel().getColumn(0).setPreferredWidth(40);
@@ -692,6 +714,7 @@ public class CadastroUsuario extends javax.swing.JFrame {
     private javax.swing.JButton btnPesquisar;
     private javax.swing.JButton btnSalvar;
     private javax.swing.JButton btnVoltar;
+    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JCheckBox cbID;
     private javax.swing.JCheckBox cbLogin;
     private javax.swing.JComboBox<String> cbxTipo;

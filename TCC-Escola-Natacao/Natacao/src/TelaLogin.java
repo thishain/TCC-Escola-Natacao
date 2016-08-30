@@ -1,5 +1,9 @@
 import Conexao.Conexao;
 import java.awt.Toolkit;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 
 
@@ -13,7 +17,7 @@ public class TelaLogin extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null); 
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/Imagens/Cadeado.png")));
-            
+        conecta.Conectar();           
     }
     
   
@@ -147,9 +151,24 @@ public class TelaLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSairActionPerformed
 
     private void btnConectarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConectarActionPerformed
-        Principal prin = new Principal();
-        prin.setVisible(true);
-        this.dispose();
+        try {
+            conecta.executaSQL("SELECT * FROM USUARIOS WHERE LOGIN= '" + txtUsuario.getText() + "'");
+            conecta.resultado.next();
+            if (conecta.resultado.getString("SENHA").equals(txtPSenha.getText())) {
+                Principal prin = new Principal();
+                prin.setVisible(true);
+                dispose();
+            }
+            else {
+                JOptionPane.showMessageDialog(null, "Usuario ou senha inválidos!", "Atenção", JOptionPane.ERROR_MESSAGE);
+            }
+            
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Não deixe os campos vázios!", "Atenção", JOptionPane.ERROR_MESSAGE);
+        }
+        
+
         
       
     }//GEN-LAST:event_btnConectarActionPerformed
@@ -188,7 +207,7 @@ public class TelaLogin extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new CadastroUsuario().setVisible(true);
+                new TelaLogin().setVisible(true);
             }
         });
     }

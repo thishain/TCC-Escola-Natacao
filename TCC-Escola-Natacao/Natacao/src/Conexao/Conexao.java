@@ -21,8 +21,8 @@ public class Conexao {
         
         Class.forName("org.firebirdsql.jdbc.FBDriver");
         
-        con = DriverManager.getConnection("jdbc:firebirdsql://127.0.0.1:3051/"
-                + "C:\\dbe\\ESCOLANATACAO.fdb?lc_ctype=WIN1252","SYSDBA","masterkey");   
+        con = DriverManager.getConnection("jdbc:firebirdsql://127.0.0.1/"
+                + "C:\\Users\\Thiago\\Desktop\\Polivalente\\Java 3S - Billy\\TCC-Escola-Natacao\\TCC-Escola-Natacao\\Natacao\\ESCOLANATACAO.fdb?lc_ctype=WIN1252","SYSDBA","masterkey");   
         stm = con.createStatement();
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "Não foi possivel conectar ao banco!" + ex.getMessage());

@@ -88,7 +88,7 @@ public class UsuariosSQL extends Conexao{
                                             resultado.getObject("NOME").toString(),
                                             resultado.getObject("EMAIL").toString()});           
             }
-            
+            stm.close();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Usuário não cadastrado!", "Erro", JOptionPane.ERROR_MESSAGE);
         }
@@ -150,7 +150,8 @@ public class UsuariosSQL extends Conexao{
                                             resultado.getObject("SENHA").toString(),
                                             resultado.getObject("NOME").toString(),
                                             resultado.getObject("EMAIL").toString()});                
-            }                   
+            }         
+            stm.close();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Usuário não cadastrado!", "Erro", JOptionPane.ERROR_MESSAGE);
         }
